@@ -1,7 +1,6 @@
 Vue.component('cart', {
     data() {
         return {
-            imgCart: 'https://via.placeholder.com/50x100',
             cartItems: [],
             showCart: true,
         }
@@ -13,6 +12,7 @@ Vue.component('cart', {
                 find.quantity++
             } else {
                 let prod = Object.assign({ quantity: 1 }, product)
+                console.log(prod)
                 this.cartItems.push(prod)
             }
         },
@@ -29,7 +29,7 @@ Vue.component('cart', {
     },
     template: `
     <div>
-        <button class="btn-cart"><img src="images/cart.png" alt="cart img" 
+        <button class="btn-cart"><img src="img/cart.png" alt="cart img" 
         width="30px" height="30px" @click="showCart = !showCart" /></button>
         <div class="cart-block" v-show="showCart">
             <p v-if="!cartItems.length">Cart is empty</p>
@@ -37,7 +37,7 @@ Vue.component('cart', {
             v-for="item of cartItems" 
             :key="item.id_product"
             :cart-item="item" 
-            :img="imgCart"
+            
             @remove="remove">
             </cart-item>
         </div>
@@ -49,15 +49,15 @@ Vue.component('cart-item', {
     template: `
                 <div class="cart-item">
                     <div class="product-bio">
-                        <img :src="img" alt="Some image">
+                        <img :src="cartItem.imgPath" alt="Some image">
                         <div class="product-desc">
                             <p class="product-title">{{cartItem.product_name}}</p>
                             <p class="product-quantity">Quantity: {{cartItem.quantity}}</p>
-                            <p class="product-single-price">$ {{cartItem.price}} each</p>
+                            <p class="product-single-price">$&nbsp{{cartItem.price}} each</p>
                         </div>
                     </div>
                     <div class="right-block">
-                        <p class="product-price">{{cartItem.quantity*cartItem.price}}</p>
+                        <p class="product-price">$&nbsp{{cartItem.quantity*cartItem.price}}</p>
                         <button class="del-btn" @click="$emit('remove', cartItem)">&times;</button>
                     </div>
                 </div>

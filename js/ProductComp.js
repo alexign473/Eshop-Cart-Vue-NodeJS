@@ -4,7 +4,6 @@ Vue.component('products', {
             catalogUrl: '/catalogData.json',
             products: [],
             filtered: [],
-            imgProduct: 'img/product-1.jpg',
         }
     },
     methods: {
@@ -14,9 +13,10 @@ Vue.component('products', {
         }
     },
     mounted() {
-        this.$parent.getJson(`getProducts.json`)
+        this.$parent.getJson(`catalog.json`)
             .then(data => {
                 for (let item of data) {
+                    item.imgPath = `img/product-${item.id_product}.jpg`
                     this.products.push(item)
                     this.filtered.push(item)
                 }
@@ -24,19 +24,22 @@ Vue.component('products', {
     },
     template: `
     <div class="row">
-        <product v-for="item of filtered" :key="item.id_product" :img="imgProduct" :product="item"></product>
+        <product v-for="item of filtered" 
+        :key="item.id_product" 
+        :product="item">
+        </product>
     </div>
     `
 })
 
 Vue.component('product', {
-    props: ['product', 'img'],
+    props: ['product'],
     template: `
     <div class="col-4">
-        <img :src="img" alt="Some img" />
-        <h4>{{product.product_name}}</h4>
+        <img :src="product.imgPath" alt="Some img" />
+        <h4>{{ product.product_name }}</h4>
         <p>\${{ product.price }}</p>
         <button class="btn" @click="$root.$refs.cart.addProduct(product)">Add to cart</button>
-      </div>
+    </div>
     `
 })
