@@ -573,6 +573,7 @@ button, input, optgroup, select, textarea {
 .cart{
   display: flex;
   position: relative;
+  align-items: center;
 }
 .cart-block{
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
@@ -649,7 +650,7 @@ button, input, optgroup, select, textarea {
 .right-block{
   text-align: right;
 }
-.btn-search {
+/* .btn-search {
   background-color: transparent;
   border: none;
   color: #555;
@@ -657,8 +658,8 @@ button, input, optgroup, select, textarea {
   position: absolute;
   bottom: 5px;
   right: 0;
-}
-.search-form{
+} */
+/* .search-form{
   position: relative;
   margin-right: 10px;
   display: inline-block;
@@ -680,4 +681,59 @@ button, input, optgroup, select, textarea {
   .search-form {
     display: none;
   }
+} */
+
+.search-box{
+  width: fit-content;
+  height: fit-content;
+  position: relative;
+  margin-right: 10px;
+}
+.input-search{
+  height: 50px;
+  width: 50px;
+  border-style: none;
+  padding: 10px;
+  outline: none;
+  border-radius: 25px;
+  transition: all .5s ease-in-out;
+  background-color: #22a6b3;
+  background-color: #ff523b;
+  padding-right: 40px;
+  color:#555;
+}
+.input-search::placeholder{
+  color:rgba(255,255,255,.5);
+  letter-spacing: 2px;
+  font-weight: 100;
+}
+.btn-search{
+  width: 50px;
+  height: 50px;
+  border-style: none;
+  font-size: 20px;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  right: 0px;
+  color:#555 ;
+  background-color:transparent;
+  pointer-events: painted;  
+}
+.btn-search:focus ~ .input-search{
+  width: 300px;
+  border-radius: 0px;
+  /* background-color: transparent; */
+  border-bottom:1px solid rgba(255,255,255,.5);
+  transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+}
+.input-search:focus{
+  width: 300px;
+  border-radius: 0px;
+  background-color: transparent;
+  border-bottom:1px solid rgba(255,255,255,.5);
+  border-bottom:3px solid #555;
+  transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
 }

@@ -13,14 +13,13 @@ Vue.component('products', {
         }
     },
     mounted() {
-        this.$parent.getJson(`catalog.json`)
+        this.$parent.getJson(`/api/products`)
             .then(data => {
                 for (let item of data) {
-                    item.imgPath = `img/product-${item.id_product}.jpg`
-                    this.products.push(item)
-                    this.filtered.push(item)
+                    this.$data.products.push(item);
+                    this.$data.filtered.push(item);
                 }
-            })
+            });
     },
     template: `
     <div class="row">
@@ -34,9 +33,15 @@ Vue.component('products', {
 
 Vue.component('product', {
     props: ['product'],
+    // Картинка товара каталога
+    computed: {
+        productImg() {
+            return `../img/product-${this.product.id_product}.jpg`
+        }
+    },
     template: `
     <div class="col-4">
-        <img :src="product.imgPath" alt="Some img" />
+        <img :src="productImg" alt="Some img" />
         <h4>{{ product.product_name }}</h4>
         <p>\${{ product.price }}</p>
         <button class="btn" @click="$root.$refs.cart.addProduct(product)">Add to cart</button>
