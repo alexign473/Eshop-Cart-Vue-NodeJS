@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,200&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -12,6 +14,29 @@ body {
   display: flex;
   align-items: center;
   padding: 20px;
+ 
+  position: relative;
+  transition: all 0.3s ease-out;
+}
+
+.navbar.fixed-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  width: 100%;
+  /* scrolling colors */
+  background-color: black;
+  color: white;
+}
+
+.navbar.fixed-top a {
+  color: white;
+}
+
+.navbar.fixed-top .btn-cart {
+  background: #fafafa;
 }
 
 nav {
@@ -93,7 +118,7 @@ p {
 }
 
 .header .row {
-  margin-top: 20px;
+  margin-top: 0;
 }
 
 .categories {

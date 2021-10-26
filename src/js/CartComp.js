@@ -1,17 +1,51 @@
-Vue.component('cart', {
+import CartImg from '../img/cart.png'
+
+const cartItem = {
+    props: ['cartItem'],
+    // Картинка товара корзины
+    computed: {
+        CartProductImg() {
+            return require(`../img/product-${this.cartItem.id_product}.jpg`)
+        }
+    },
+    template: `
+    <div class="cart-item">
+    <div class="product-bio">
+        <img :src="CartProductImg" alt="Some image">
+        <div class="product-desc">
+            <p class="product-title">{{cartItem.product_name}}</p>
+            <p class="product-quantity">Quantity: {{cartItem.quantity}}</p>
+            <p class="product-single-price">$&nbsp{{cartItem.price}} each</p>
+        </div>
+    </div>
+    <div class="right-block">
+        <p class="product-price">$&nbsp{{cartItem.quantity*cartItem.price}}</p>
+        <button class="del-btn" @click="$emit('remove', cartItem)">&times;</button>
+    </div>
+</div>
+    `
+};
+const cart = {
     data() {
         return {
             cartItems: [],
             showCart: false,
+            CartImg: CartImg,
         }
     },
+    components: {
+        'cart-item': cartItem
+    },
     mounted() {
+        console.log('CART MOUNTED')
         this.$parent.getJson(`/api/cart`)
             .then(data => {
                 for (let item of data.contents) {
                     this.$data.cartItems.push(item);
                 }
             });
+
+        console.log(this.cartItems)
     },
     methods: {
         addProduct(item) {
@@ -53,7 +87,7 @@ Vue.component('cart', {
     },
     template: `
     <div>
-        <button class="btn-cart"><img src="img/cart.png" alt="cart img" 
+        <button class="btn-cart"><img :src="CartImg" alt="cart img" 
         width="30px" height="30px" @click="showCart = !showCart" /></button>
         <div class="cart-block" v-show="showCart">
             <p v-if="!cartItems.length">Cart is empty</p>
@@ -66,29 +100,6 @@ Vue.component('cart', {
         </div>
     </div>
     `
-})
-Vue.component('cart-item', {
-    props: ['cartItem'],
-    // Картинка товара корзины
-    computed: {
-        CartProductImg() {
-            return `../img/product-${this.cartItem.id_product}.jpg`
-        }
-    },
-    template: `
-                <div class="cart-item">
-                    <div class="product-bio">
-                        <img :src="CartProductImg" alt="Some image">
-                        <div class="product-desc">
-                            <p class="product-title">{{cartItem.product_name}}</p>
-                            <p class="product-quantity">Quantity: {{cartItem.quantity}}</p>
-                            <p class="product-single-price">$&nbsp{{cartItem.price}} each</p>
-                        </div>
-                    </div>
-                    <div class="right-block">
-                        <p class="product-price">$&nbsp{{cartItem.quantity*cartItem.price}}</p>
-                        <button class="del-btn" @click="$emit('remove', cartItem)">&times;</button>
-                    </div>
-                </div>
-    `
-});
+};
+
+export default cart
