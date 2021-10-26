@@ -31,7 +31,9 @@ body {
   color: white;
 }
 
-.navbar.fixed-top a {
+.navbar.fixed-top a,
+.navbar.fixed-top input,
+.navbar.fixed-top button {
   color: white;
 }
 
